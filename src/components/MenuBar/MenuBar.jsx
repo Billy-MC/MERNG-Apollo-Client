@@ -9,7 +9,7 @@ const MenuBar = () => {
     const [activeItem, setActiveItem] = useState(path);
     const { Item, Menu } = MainMenu;
 
-    const itemOnClickHandler = value => {
+    const itemOnClickHandler = (_, value) => {
         const { name } = value;
         return setActiveItem(name);
     };

@@ -1,23 +1,23 @@
 import {
-	ApolloClient,
-	ApolloProvider,
-	InMemoryCache,
-	createHttpLink,
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  createHttpLink,
 } from '@apollo/client';
 import App from './App';
 
 const httpLink = createHttpLink({
-	uri: 'http://localhost:4000/',
+  uri: 'http://localhost:4000/',
 });
 
 const client = new ApolloClient({
-	link: httpLink,
-	cache: new InMemoryCache(),
+  link: httpLink,
+  cache: new InMemoryCache(),
 });
 
 const Apollo = () => (
-	<ApolloProvider client={client}>
-		<App />
-	</ApolloProvider>
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>
 );
 export default Apollo;

@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 const httpLink = createHttpLink({
-    uri: 'http://localhost:4000/',
+    uri: 'http://localhost:4000',
 });
 
 const client = new ApolloClient({

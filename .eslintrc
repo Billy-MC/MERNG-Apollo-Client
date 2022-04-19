@@ -31,7 +31,9 @@
             { "namedComponents": "arrow-function" }
         ],
         "arrow-body-style": ["error", "as-needed"],
-        "no-restricted-exports": "off"
+        "no-restricted-exports": "off",
+        "react/prop-types": "off",
+        "no-use-before-define": ["error", "nofunc"]
     },
     "settings": {
         "import/resolver": {

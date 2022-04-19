@@ -1,6 +1,6 @@
 import {
     ApolloClient,
-    ApolloProvider,
+    ApolloProvider as Provider,
     InMemoryCache,
     createHttpLink,
 } from '@apollo/client';
@@ -17,11 +17,11 @@ const client = new ApolloClient({
     cache: new InMemoryCache(),
 });
 
-const Apollo = () => (
-    <ApolloProvider client={client}>
+const ApolloProvider = () => (
+    <Provider client={client}>
         <BrowserRouter>
             <App />
         </BrowserRouter>
-    </ApolloProvider>
+    </Provider>
 );
-export default Apollo;
+export default ApolloProvider;

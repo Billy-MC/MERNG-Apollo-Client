@@ -1,24 +1,19 @@
-import { Routes, Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
-import NoMatch from 'pages/NoMatch';
+import { AuthProvider } from 'store/auth-context';
 import MenuBar from 'components/MenuBar';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Route from 'routes/Route';
+
 import './App.module.css';
 
 const App = () => (
-    <Container>
-        <MenuBar />
-        <Routes>
-            <Route path="/" index element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="*" element={<NoMatch />} />
-        </Routes>
-    </Container>
+    <AuthProvider>
+        <Container>
+            <MenuBar />
+            <Route />
+        </Container>
+    </AuthProvider>
 );
 
 export default App;

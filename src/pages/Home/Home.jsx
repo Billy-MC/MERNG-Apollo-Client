@@ -1,6 +1,5 @@
 import { useQuery, gql } from '@apollo/client';
 import PostCard from 'components/PostCard';
-import { useState, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import styles from './Home.module.css';

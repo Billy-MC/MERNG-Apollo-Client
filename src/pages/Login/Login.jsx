@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Button, Form, Message } from 'semantic-ui-react';
 import { gql, useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 
-import useForm from '../../hooks/useForm';
+import { AuthContext } from 'store/auth-context';
+import useForm from 'hooks/useForm';
 import styles from './Login.module.css';
 
 const initialInput = {
@@ -26,6 +27,7 @@ const LOGIN_USER = gql`
 `;
 
 const Login = () => {
+    const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
     const { Input } = Form;
     const [errors, setErrors] = useState({});
@@ -36,6 +38,10 @@ const Login = () => {
 
     const [addUser, { loading }] = useMutation(LOGIN_USER, {
         update(proxy, result) {
+            const {
+                data: { login: user },
+            } = result;
+            authCtx.onLogin(user);
             navigate('/');
         },
         onError(err) {

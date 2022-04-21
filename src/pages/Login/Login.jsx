@@ -34,7 +34,7 @@ const Login = () => {
         initialInput,
     );
 
-    const [addUser] = useMutation(LOGIN_USER, {
+    const [addUser, { loading }] = useMutation(LOGIN_USER, {
         update(proxy, result) {
             navigate('/');
         },
@@ -49,7 +49,11 @@ const Login = () => {
     }
     return (
         <div className={styles['form-container']}>
-            <Form onSubmit={onSubmitHandler} noValidate>
+            <Form
+                onSubmit={onSubmitHandler}
+                noValidate
+                className={loading ? 'loading' : ''}
+            >
                 <h1>Login</h1>
                 <Input
                     label="Username"
@@ -71,7 +75,7 @@ const Login = () => {
                     error={!!errors.password}
                 />
                 <Button type="submit" primary>
-                    Register
+                    Login
                 </Button>
             </Form>
             {Object.keys(errors).length > 0 && (

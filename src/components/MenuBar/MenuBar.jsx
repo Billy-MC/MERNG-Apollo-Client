@@ -25,7 +25,7 @@ const MenuBar = () => {
             <Item
                 name={authCtx.user ? authCtx.user.username : 'home'}
                 active={authCtx.user ? true : activeItem === 'home'}
-                onClick={authCtx.user ? false : itemOnClickHandler}
+                onClick={authCtx.user ? null : itemOnClickHandler}
                 as={Link}
                 to="/"
             />

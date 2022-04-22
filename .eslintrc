@@ -5,12 +5,12 @@
         "node": true
     },
     "extends": [
+        "airbnb",
+        "eslint:recommended",
+        "prettier",
         "react-app",
         "plugin:react/recommended",
-        "airbnb",
         "plugin:jsx-a11y/recommended",
-        "prettier",
-        "eslint:recommended",
         "plugin:prettier/recommended"
     ],
     "parserOptions": {

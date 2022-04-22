@@ -1,8 +1,10 @@
 import { useState, useContext } from 'react';
 import { Button, Form, Message } from 'semantic-ui-react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
+
 import { AuthContext } from 'store/auth-context';
+import { REGISTER_USER } from 'graphql/user';
 import useForm from 'hooks/useForm';
 import styles from './Register.module.css';
 
@@ -12,30 +14,6 @@ const initialInput = {
     password: '',
     confirmPassword: '',
 };
-
-const REGISTER_USER = gql`
-    mutation register(
-        $username: String!
-        $email: String!
-        $password: String!
-        $confirmPassword: String!
-    ) {
-        register(
-            registerInput: {
-                username: $username
-                email: $email
-                password: $password
-                confirmPassword: $confirmPassword
-            }
-        ) {
-            id
-            email
-            username
-            createdAt
-            token
-        }
-    }
-`;
 
 const Register = () => {
     const authCtx = useContext(AuthContext);

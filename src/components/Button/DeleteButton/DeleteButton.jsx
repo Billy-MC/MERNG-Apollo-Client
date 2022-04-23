@@ -36,9 +36,6 @@ const DeleteButton = props => {
     });
 
     const openModalHandler = () => {
-        if (commentId) {
-            console.log(commentId);
-        }
         setOpenModal(true);
     };
 

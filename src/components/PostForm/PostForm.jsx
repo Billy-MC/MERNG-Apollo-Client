@@ -67,9 +67,9 @@ const PostForm = () => {
                     value={values.body}
                     error={!!error}
                 />
-                <Button type="submit" color="teal">
+                <button type="submit" className="ui button teal">
                     Submit
-                </Button>
+                </button>
             </Field>
             {error && (
                 <Message negative style={{ marginBottom: 20 }}>

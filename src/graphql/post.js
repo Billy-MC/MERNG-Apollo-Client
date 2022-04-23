@@ -63,6 +63,21 @@ const DELETE_POST_MUTATION = gql`
     }
 `;
 
+const CREATE_COMMENT_MUTATION = gql`
+    mutation createComment($postId: ID!, $body: String!) {
+        createComment(postId: $postId, body: $body) {
+            id
+            commentCount
+            comments {
+                id
+                createdAt
+                username
+                body
+            }
+        }
+    }
+`;
+
 const DELETE_COMMENT_MUTATION = gql`
     mutation deleteComment($postId: ID!, $commentId: ID!) {
         deleteComment(postId: $postId, commentId: $commentId) {
@@ -83,5 +98,6 @@ export {
     CREATE_POST_MUTATION,
     LIKE_POST_MUTATION,
     DELETE_POST_MUTATION,
+    CREATE_COMMENT_MUTATION,
     DELETE_COMMENT_MUTATION,
 };

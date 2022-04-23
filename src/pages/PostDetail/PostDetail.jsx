@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { useParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
@@ -11,9 +11,13 @@ import {
     Icon,
     Label,
     Transition,
+    Form,
 } from 'semantic-ui-react';
 
-import { FETCH_POSTS_QUERY } from 'graphql/post';
+import {
+    FETCH_POSTS_QUERY,
+    CREATE_COMMENT_MUTATION,
+} from 'graphql/post';
 import img from 'assets/images/steve.jpeg';
 import LikeButton from 'components/Button/LikeButton';
 import DeleteButton from 'components/Button/DeleteButton';
@@ -22,6 +26,7 @@ import { AuthContext } from 'store/auth-context';
 const PostDetail = () => {
     const { postId } = useParams();
     const [post, setPost] = useState();
+    const [commentValue, setCommentValue] = useState('');
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
     const { Row, Column } = Grid;
@@ -30,6 +35,19 @@ const PostDetail = () => {
 
     const { loading, data } = useQuery(FETCH_POSTS_QUERY, {
         variables: { postId },
+        update() {
+            setCommentValue('');
+        },
+    });
+
+    const [createComment] = useMutation(CREATE_COMMENT_MUTATION, {
+        variables: {
+            postId,
+            body: commentValue,
+        },
+        update() {
+            setCommentValue('');
+        },
     });
 
     useEffect(() => {
@@ -42,6 +60,7 @@ const PostDetail = () => {
         navigate('/');
     };
 
+    const changeCommentHandler = e => setCommentValue(e.target.value);
     return (
         <>
             <h1>Detail Page</h1>
@@ -49,7 +68,7 @@ const PostDetail = () => {
                 <p>Loading...</p>
             ) : (
                 <Grid>
-                    <Row style={{ alignItems: 'center' }}>
+                    <Row>
                         <Column width={2}>
                             <Image
                                 src={img}
@@ -101,6 +120,40 @@ const PostDetail = () => {
                                     )}
                                 </Content>
                             </Card>
+                            {user && (
+                                <Card fluid>
+                                    <Content>
+                                        <p>Post a comment</p>
+                                        <Form>
+                                            <div className="ui action input fluid">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Comment.."
+                                                    value={
+                                                        commentValue
+                                                    }
+                                                    onChange={
+                                                        changeCommentHandler
+                                                    }
+                                                />
+                                                <button
+                                                    type="submit"
+                                                    className="ui button teal"
+                                                    disabled={
+                                                        commentValue.trim() ===
+                                                        ''
+                                                    }
+                                                    onClick={
+                                                        createComment
+                                                    }
+                                                >
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </Form>
+                                    </Content>
+                                </Card>
+                            )}
                             <Group>
                                 {post.comments.map(comment => (
                                     <Card fluid key={comment.id}>

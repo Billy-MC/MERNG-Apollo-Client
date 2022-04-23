@@ -34,6 +34,11 @@ const client = new ApolloClient({
                             return { ...existing, ...incoming };
                         },
                     },
+                    comments: {
+                        merge(incoming, existing) {
+                            return { ...existing, ...incoming };
+                        },
+                    },
                 },
             },
         },

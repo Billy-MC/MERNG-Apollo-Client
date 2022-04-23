@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Form, Message } from 'semantic-ui-react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 
@@ -67,9 +67,9 @@ const Login = () => {
                     onChange={onChangeHandler}
                     error={!!errors.password}
                 />
-                <Button type="submit" primary>
+                <button type="submit" className="ui button blue">
                     Login
-                </Button>
+                </button>
             </Form>
             {Object.keys(errors).length > 0 && (
                 <Message

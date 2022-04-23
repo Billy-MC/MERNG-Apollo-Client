@@ -10,6 +10,7 @@ import {
     Button,
     Icon,
     Label,
+    Transition,
 } from 'semantic-ui-react';
 
 import { FETCH_POSTS_QUERY } from 'graphql/post';
@@ -22,9 +23,10 @@ const PostDetail = () => {
     const { postId } = useParams();
     const [post, setPost] = useState();
     const navigate = useNavigate();
-    const { Row, Column } = Grid;
-    const { Content, Header, Meta, Description } = Card;
     const { user } = useContext(AuthContext);
+    const { Row, Column } = Grid;
+    const { Group } = Transition;
+    const { Content, Header, Meta, Description } = Card;
 
     const { loading, data } = useQuery(FETCH_POSTS_QUERY, {
         variables: { postId },
@@ -99,29 +101,34 @@ const PostDetail = () => {
                                     )}
                                 </Content>
                             </Card>
-                            {post.comments.map(comment => (
-                                <Card fluid key={comment.id}>
-                                    <Content>
-                                        {user?.username ===
-                                            comment.username && (
-                                            <DeleteButton
-                                                postId={postId}
-                                            />
-                                        )}
-                                        <Header>
-                                            {comment.username}
-                                        </Header>
-                                        <Meta>
-                                            {moment(
-                                                +comment.createdAt,
-                                            ).fromNow()}
-                                        </Meta>
-                                        <Description>
-                                            {comment.body}
-                                        </Description>
-                                    </Content>
-                                </Card>
-                            ))}
+                            <Group>
+                                {post.comments.map(comment => (
+                                    <Card fluid key={comment.id}>
+                                        <Content>
+                                            {user?.username ===
+                                                comment.username && (
+                                                <DeleteButton
+                                                    postId={postId}
+                                                    commentId={
+                                                        comment.id
+                                                    }
+                                                />
+                                            )}
+                                            <Header>
+                                                {comment.username}
+                                            </Header>
+                                            <Meta>
+                                                {moment(
+                                                    +comment.createdAt,
+                                                ).fromNow()}
+                                            </Meta>
+                                            <Description>
+                                                {comment.body}
+                                            </Description>
+                                        </Content>
+                                    </Card>
+                                ))}
+                            </Group>
                         </Column>
                     </Row>
                 </Grid>

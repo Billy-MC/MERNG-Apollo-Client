@@ -2,30 +2,43 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Button, Icon, Confirm } from 'semantic-ui-react';
 
-import { DELETE_POST_MUTATION } from 'graphql/post';
+import {
+    DELETE_POST_MUTATION,
+    DELETE_COMMENT_MUTATION,
+} from 'graphql/post';
 
 const DeleteButton = props => {
-    const { postId, pushAddress } = props;
+    const { postId, pushAddress, commentId } = props;
     const [openModal, setOpenModal] = useState(false);
 
-    const [deletePost] = useMutation(DELETE_POST_MUTATION, {
-        variables: { postId },
+    const mutation = commentId
+        ? DELETE_COMMENT_MUTATION
+        : DELETE_POST_MUTATION;
+
+    const [deletePostOrMutation] = useMutation(mutation, {
+        variables: { postId, commentId },
         update(cache) {
             setOpenModal(false);
-            cache.modify({
-                fields: {
-                    getPosts(cachePosts, { readField }) {
-                        return cachePosts.filter(
-                            Post => postId !== readField('id', Post),
-                        );
+            if (!commentId) {
+                cache.modify({
+                    fields: {
+                        getPosts(cachePosts, { readField }) {
+                            return cachePosts.filter(
+                                Post =>
+                                    postId !== readField('id', Post),
+                            );
+                        },
                     },
-                },
-            });
+                });
+            }
             if (pushAddress) pushAddress();
         },
     });
 
     const openModalHandler = () => {
+        if (commentId) {
+            console.log(commentId);
+        }
         setOpenModal(true);
     };
 
@@ -50,7 +63,7 @@ const DeleteButton = props => {
             <Confirm
                 open={openModal}
                 onCancel={closeModalHandler}
-                onConfirm={deletePost}
+                onConfirm={deletePostOrMutation}
             />
         </>
     );

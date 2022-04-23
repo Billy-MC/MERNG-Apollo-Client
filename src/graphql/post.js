@@ -63,9 +63,25 @@ const DELETE_POST_MUTATION = gql`
     }
 `;
 
+const DELETE_COMMENT_MUTATION = gql`
+    mutation deleteComment($postId: ID!, $commentId: ID!) {
+        deleteComment(postId: $postId, commentId: $commentId) {
+            id
+            commentCount
+            comments {
+                id
+                username
+                createdAt
+                body
+            }
+        }
+    }
+`;
+
 export {
     FETCH_POSTS_QUERY,
     CREATE_POST_MUTATION,
     LIKE_POST_MUTATION,
     DELETE_POST_MUTATION,
+    DELETE_COMMENT_MUTATION,
 };

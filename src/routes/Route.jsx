@@ -8,6 +8,7 @@ import NoMatch from 'pages/NoMatch';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import Register from 'pages/Register';
+import PageDetail from 'pages/PostDetail';
 import ProtectedRoute from './ProtectedRoute';
 
 const Route = () => (
@@ -21,6 +22,7 @@ const Route = () => (
             <RoutePage path="/login" element={<Login />} />
             <RoutePage path="/register" element={<Register />} />
         </RoutePage>
+        <RoutePage path="/post/:postId" element={<PageDetail />} />
         <RoutePage path="*" element={<NoMatch />} />
     </Routes>
 );

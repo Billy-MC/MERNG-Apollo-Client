@@ -6,7 +6,7 @@ import { AuthContext } from 'store/auth-context';
 const useAuth = () => {
     const token = localStorage.getItem('token');
     const user = { isLoggedIn: token };
-    return user && user.isLoggedIn;
+    return user?.isLoggedIn;
 };
 const ProtectedRoute = () => {
     const authCtx = useContext(AuthContext);

@@ -1,7 +1,12 @@
+import { useContext } from 'react';
 import { Button, Card, Icon, Label, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import img from '../../assets/images/steve.jpeg';
+
+import { AuthContext } from 'store/auth-context';
+import LikeButton from 'components/Button/LikeButton';
+import DeleteButton from 'components/Button/DeleteButton';
+import img from 'assets/images/steve.jpeg';
 
 const PostCard = props => {
     const {
@@ -16,40 +21,27 @@ const PostCard = props => {
         },
     } = props;
     const { Content, Header, Meta, Description } = Card;
+    const { user } = useContext(AuthContext);
 
-    const likePostHandler = e => {
-        e.preventDefault();
-    };
-    const commentPostHandler = e => {
-        e.preventDefault();
-    };
     return (
         <Card fluid>
             <Content>
                 <Image floated="right" size="mini" src={img} />
                 <Header>{username}</Header>
-                <Meta as={Link} to={`/posts/${id}`}>
+                <Meta as={Link} to={`/post/${id}`}>
                     {moment(+createdAt).fromNow()}
                 </Meta>
                 <Description>{body}</Description>
             </Content>
             <Content extra>
+                <LikeButton
+                    user={user}
+                    post={{ likeCount, likes, id }}
+                />
                 <Button
-                    as="div"
                     labelPosition="right"
-                    onClick={likePostHandler}
-                >
-                    <Button color="teal" basic>
-                        <Icon name="heart" />
-                    </Button>
-                    <Label basic color="teal" pointing="left">
-                        {likeCount}
-                    </Label>
-                </Button>
-                <Button
-                    as="div"
-                    labelPosition="right"
-                    onClick={commentPostHandler}
+                    as={Link}
+                    to={`/post/${id}`}
                 >
                     <Button color="blue" basic>
                         <Icon name="comments" />
@@ -58,6 +50,9 @@ const PostCard = props => {
                         {commentCount}
                     </Label>
                 </Button>
+                {user?.username === username && (
+                    <DeleteButton postId={id} />
+                )}
             </Content>
         </Card>
     );

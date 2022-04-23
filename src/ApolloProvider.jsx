@@ -25,24 +25,7 @@ const httpLink = createHttpLink({
 
 const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache({
-        typePolicies: {
-            Post: {
-                fields: {
-                    likes: {
-                        merge(incoming, existing) {
-                            return { ...existing, ...incoming };
-                        },
-                    },
-                    comments: {
-                        merge(incoming, existing) {
-                            return { ...existing, ...incoming };
-                        },
-                    },
-                },
-            },
-        },
-    }),
+    cache: new InMemoryCache(),
 });
 
 const ApolloProvider = () => (

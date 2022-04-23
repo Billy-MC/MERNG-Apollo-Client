@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { Button, Form, Message } from 'semantic-ui-react';
-import { gql, useMutation } from '@apollo/client';
+import { Form, Message } from 'semantic-ui-react';
+import { useMutation } from '@apollo/client';
 
-import { CREATE_POST_MUTATION } from 'graphql/post';
+import {
+    CREATE_POST_MUTATION,
+    FETCH_POSTS_QUERY,
+} from 'graphql/post';
 import useForm from 'hooks/useForm';
 
 const PostForm = () => {
@@ -16,38 +19,22 @@ const PostForm = () => {
 
     const [createPost] = useMutation(CREATE_POST_MUTATION, {
         variables: values,
-        onError: err => setError(err.graphQLErrors[0].message),
+
         update(cache, result) {
-            cache.modify({
-                fields: {
-                    getPosts(existingPosts = []) {
-                        const newPostRef = cache.writeFragment({
-                            data: result.data.createPost,
-                            fragment: gql`
-                                fragment NewPost on getPosts {
-                                    id
-                                    body
-                                    createdAt
-                                    username
-                                    likeCount
-                                    likes {
-                                        username
-                                    }
-                                    commentCount
-                                    comments {
-                                        id
-                                        username
-                                        createdAt
-                                        body
-                                    }
-                                }
-                            `,
-                        });
-                        return [newPostRef, ...existingPosts];
-                    },
+            const list = cache.readQuery({
+                query: FETCH_POSTS_QUERY,
+            });
+            cache.writeQuery({
+                query: FETCH_POSTS_QUERY,
+                data: {
+                    getPosts: [
+                        result.data.createPost,
+                        ...list.getPosts,
+                    ],
                 },
             });
         },
+        onError: err => setError(err.graphQLErrors[0].message),
     });
 
     function createNewPost() {

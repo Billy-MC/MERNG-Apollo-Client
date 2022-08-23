@@ -68,3 +68,55 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+```zsh
+$PROJECT_ROOT
+│ # pre-commit
+├── .husky
+│ # Work Place setting and Recommendations extension
+├── .vscode
+│ # Cypress file
+├── cypress
+│ │ # testing script
+│ ├── e2e
+│ # each page script
+│ ├── Page
+│
+│ #icon
+├── public
+│
+├── src
+│ │ # All images
+│ ├── assets
+│ │ # React shared component
+│ ├── components
+│ │ # Application configuration
+│ ├── configs
+│ │ # Constant / Enum variable
+│ ├── constants
+│ │ # Graphql related
+│ ├── graphql
+│ │ # Schema fragments
+│ │ ├── fragments
+│ │ # Gql mutation
+│ │ ├── mutations
+│ │ # Gql query
+│ │ ├── queries
+│ │ # Gql subscription
+│ │ ├── subscriptions
+│ │
+│ │ # Custom hooks
+│ ├── hooks
+│ │ # Interfaces files
+│ ├── interfaces
+│ │ # Page layout
+│ ├── layouts
+│ │ # Page files
+│ ├── pages
+│ │ # Page routing
+│ ├── routes
+│ │ # mixins, variable, and tailwind
+│ ├── styles
+│ │ # tools, helper
+│ ├── utils
+```
